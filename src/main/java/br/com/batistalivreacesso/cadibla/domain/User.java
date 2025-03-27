@@ -1,11 +1,13 @@
 package br.com.batistalivreacesso.cadibla.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.UUID;
 
@@ -22,7 +24,8 @@ public class User {
     private UUID id;
 
     private String Name;
-    private Date BirthDate;
+    @JsonFormat(pattern = "yyyy/MM/dd")
+    private LocalDate BirthDate;
     private String Email;
     private String CPF;
     private String Phone;
@@ -32,11 +35,14 @@ public class User {
     private String Zip;
     private String Country;
     private String Description;
-    private Date baptism;
+    @JsonFormat(pattern = "yyyy/MM/dd")
+    private LocalDate baptism;
+    @JsonFormat(pattern = "yyyy/MM/dd")
+    private LocalDate enterChurch;
     private String Password;
 
-    @ManyToOne
-    @JoinColumn(name = "position_id")
+    @ManyToOne(fetch = FetchType.EAGER) // Garante que o Position será carregado automaticamente
+    @JoinColumn(name = "position_id", nullable = false)
     private Position position;
 
 
